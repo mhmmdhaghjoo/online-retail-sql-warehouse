@@ -1,0 +1,24 @@
+--- without index ---
+                                    QUERY PLAN                                    
+----------------------------------------------------------------------------------
+ Finalize Aggregate (actual rows=1 loops=1)
+   ->  Gather (actual rows=3 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Partial Aggregate (actual rows=1 loops=3)
+               ->  Parallel Seq Scan on fact_sales_big (actual rows=6787 loops=3)
+                     Filter: ((date_key >= 20251124) AND (date_key <= 20251130))
+                     Rows Removed by Filter: 490720
+(8 rows)
+
+--- with B-tree index on date_key ---
+                                      QUERY PLAN                                      
+--------------------------------------------------------------------------------------
+ Aggregate (actual rows=1 loops=1)
+   ->  Bitmap Heap Scan on fact_sales_big (actual rows=20360 loops=1)
+         Recheck Cond: ((date_key >= 20251124) AND (date_key <= 20251130))
+         Heap Blocks: exact=280
+         ->  Bitmap Index Scan on idx_fact_sales_big_date (actual rows=20360 loops=1)
+               Index Cond: ((date_key >= 20251124) AND (date_key <= 20251130))
+(6 rows)
+

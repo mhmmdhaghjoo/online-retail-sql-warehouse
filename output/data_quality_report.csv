@@ -1,0 +1,13 @@
+table_name,check_name,failing_rows,total_rows
+customers,country not a clean ISO code,178,5000
+customers,country is null,99,5000
+customers,birth_year placeholder (1900),42,5000
+customers,duplicate customer_id,0,5000
+order_lines,exact duplicate rows,374,37797
+order_lines,customer_id is null,134,37797
+order_lines,quantity = 0 (cancelled line),112,37797
+order_lines,quantity < 0 (sign error),62,37797
+order_lines,product_id not in products,0,37797
+order_lines,order before customer sign-up,0,37663
+products,category spelling variants,16,200
+products,unit_cost >= unit_price,0,200

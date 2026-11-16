@@ -1,0 +1,6 @@
+acquisition_channel,customers,avg_orders,repeat_rate_pct,avg_revenue_per_customer,median_revenue_per_customer
+email,791,3.81,56.5,542.23,277.08
+social,1009,3.34,50.0,470.67,231.34
+referral,511,3.30,52.6,467.47,261.26
+organic,1479,3.27,52.1,463.54,238.02
+paid_search,1208,3.29,53.6,462.94,239.24
