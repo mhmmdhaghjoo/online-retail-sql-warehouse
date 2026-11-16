@@ -1,5 +1,7 @@
 # Online Retail SQL Warehouse
 
+[![build-warehouse](https://github.com/mhmmdhaghjoo/online-retail-sql-warehouse/actions/workflows/ci.yml/badge.svg)](https://github.com/mhmmdhaghjoo/online-retail-sql-warehouse/actions/workflows/ci.yml)
+
 An end-to-end analytics warehouse for an online shop, written in PostgreSQL:
 raw CSV exports are staged, profiled, cleaned into a star schema, tested, and
 served through reporting views that answer concrete business questions.
