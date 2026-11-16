@@ -122,6 +122,10 @@ This is one of three projects built around the same simulated online shop:
 - [Customer Churn ML Pipeline](https://github.com/mhmmdhaghjoo/customer-churn-ml-pipeline): the predictive model: churn prediction as a tested Python package
 - [Text-to-SQL Assistant](https://github.com/mhmmdhaghjoo/text-to-sql-assistant): the natural-language interface: LLM-written SQL with a read-only guard and an evaluation set
 
+A fourth project uses real-format HR data:
+
+- [Employee Turnover Analytics](https://github.com/mhmmdhaghjoo/employee-turnover-analytics): people analytics on ten years of HR records, with survival analysis, risk models and a fairness audit
+
 More about me: [github.com/mhmmdhaghjoo](https://github.com/mhmmdhaghjoo)
 
 ## Licence
