@@ -114,6 +114,18 @@ output/                 exported results and charts
 tests/                  pytest tests for the simulator
 ```
 
+## Related projects
+
+This is one of three projects built around the same simulated online shop:
+
+- **Online Retail SQL Warehouse** (this repository): the data warehouse: raw exports to a tested star schema and business analyses in SQL
+- [Customer Churn ML Pipeline](https://github.com/mhmmdhaghjoo/customer-churn-ml-pipeline): the predictive model: churn prediction as a tested Python package
+- [Text-to-SQL Assistant](https://github.com/mhmmdhaghjoo/text-to-sql-assistant): the natural-language interface: LLM-written SQL with a read-only guard and an evaluation set
+
+More about me: [github.com/mhmmdhaghjoo](https://github.com/mhmmdhaghjoo)
+
 ## Licence
 
 MIT
+
+Author: Mohammad Haghjoo
