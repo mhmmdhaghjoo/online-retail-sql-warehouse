@@ -128,7 +128,7 @@ Two more projects:
 
 - [Employee Turnover Analytics](https://github.com/mhmmdhaghjoo/employee-turnover-analytics): people analytics on ten years of HR records, with survival analysis, risk models and a fairness audit
 
-More about me: [github.com/mhmmdhaghjoo](https://github.com/mhmmdhaghjoo)
+More about me: [mhmmdhaghjoo.github.io](https://mhmmdhaghjoo.github.io) and [github.com/mhmmdhaghjoo](https://github.com/mhmmdhaghjoo)
 
 ## Licence
 
