@@ -8,13 +8,12 @@ served through reporting views that answer concrete business questions.
 
 ![Monthly net revenue](output/monthly_revenue.png)
 
-> **Online shop case series.** One simulated shop, three questions in order:
+> **Online shop case series.** One simulated shop, two questions in order:
 >
 > | Step | Question | Project |
 > |---|---|---|
 > | 1 | Can the shop's data be trusted, and which customers come back? | **Online Retail SQL Warehouse** (this repository) |
 > | 2 | Which customers will stop buying in the next 90 days? | [Customer Churn ML Pipeline](https://github.com/mhmmdhaghjoo/customer-churn-ml-pipeline) |
-> | 3 | Can a manager query the same data in plain English, safely? | [Text-to-SQL Assistant](https://github.com/mhmmdhaghjoo/text-to-sql-assistant) |
 
 ## What it does
 
@@ -124,11 +123,10 @@ tests/                  pytest tests for the simulator
 
 ## Related projects
 
-This is one of three projects built around the same simulated online shop:
+This is one of two projects built around the same simulated online shop:
 
 - **Online Retail SQL Warehouse** (this repository): the data warehouse: raw exports to a tested star schema and business analyses in SQL
 - [Customer Churn ML Pipeline](https://github.com/mhmmdhaghjoo/customer-churn-ml-pipeline): the predictive model: churn prediction as a tested Python package
-- [Text-to-SQL Assistant](https://github.com/mhmmdhaghjoo/text-to-sql-assistant): the natural-language interface: LLM-written SQL with a read-only guard and an evaluation set
 
 More projects:
 
