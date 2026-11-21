@@ -56,5 +56,18 @@ BEGIN
     SELECT COUNT(*) - COUNT(DISTINCT customer_key) INTO n FROM marts.customer_rfm;
     IF n <> 0 THEN RAISE EXCEPTION 'customer_rfm has % duplicate customers', n; END IF;
 
-    RAISE NOTICE 'all 8 warehouse tests passed (% staged lines -> % fact rows)', staged_lines, loaded_lines;
+    -- 9. No order carries two different customer IDs in the raw export
+    --    (the back-fill in 04 would otherwise pick one silently).
+    SELECT COUNT(*) INTO n FROM (
+        SELECT order_id FROM staging.order_lines
+        WHERE customer_id IS NOT NULL
+        GROUP BY order_id HAVING COUNT(DISTINCT customer_id) > 1
+    ) AS conflicts;
+    IF n <> 0 THEN RAISE EXCEPTION '% orders have conflicting customer IDs', n; END IF;
+
+    -- 10. marts.orders really is one row per order.
+    SELECT COUNT(*) - COUNT(DISTINCT order_id) INTO n FROM marts.orders;
+    IF n <> 0 THEN RAISE EXCEPTION 'marts.orders has % duplicate orders', n; END IF;
+
+    RAISE NOTICE 'all 10 warehouse tests passed (% staged lines -> % fact rows)', staged_lines, loaded_lines;
 END $$;

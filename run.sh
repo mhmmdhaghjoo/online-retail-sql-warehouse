@@ -25,7 +25,7 @@ export_csv() {  # export_csv <name> <query>
 }
 
 echo ">> exporting marts and analyses"
-export_csv data_quality_report "SELECT * FROM staging.dq_report ORDER BY table_name, failing_rows DESC"
+export_csv data_quality_report "SELECT * FROM staging.dq_report ORDER BY table_name, failing_rows DESC, check_name"
 export_csv monthly_revenue     "SELECT * FROM marts.monthly_revenue ORDER BY order_month"
 export_csv cohort_retention    "SELECT * FROM marts.cohort_retention ORDER BY cohort_month, months_since_first"
 for file in analysis/*.sql; do

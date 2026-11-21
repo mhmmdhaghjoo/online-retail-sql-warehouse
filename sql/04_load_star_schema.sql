@@ -47,11 +47,21 @@ ORDER BY product_id;
 --   * exact duplicates (double export)  -> SELECT DISTINCT
 --   * quantity = 0 (cancelled line)     -> excluded
 --   * quantity < 0 (sign error)         -> absolute value
---   * customer_id is null               -> "unknown" customer
+--   * customer_id is null               -> taken from the other lines of the
+--                                          same order; "unknown" customer only
+--                                          if no line of the order has one
+--   (an order belongs to one customer, so a key lost on one line must not
+--    split the order in two; 06_tests.sql checks the order grain)
 WITH deduplicated AS (
     SELECT DISTINCT order_id, order_ts, customer_id, product_id, quantity, unit_price, discount_pct
     FROM staging.order_lines
     WHERE quantity <> 0
+),
+order_customer AS (
+    SELECT order_id, MIN(customer_id) AS customer_id
+    FROM deduplicated
+    WHERE customer_id IS NOT NULL
+    GROUP BY order_id
 )
 INSERT INTO dw.fact_sales
     (order_id, order_ts, date_key, customer_key, product_key,
@@ -68,7 +78,8 @@ SELECT o.order_id,
        ROUND(ABS(o.quantity) * p.unit_cost, 2)
 FROM deduplicated AS o
 JOIN dw.dim_product AS p USING (product_id)
-LEFT JOIN dw.dim_customer AS c ON c.customer_id = o.customer_id
+LEFT JOIN order_customer AS oc USING (order_id)
+LEFT JOIN dw.dim_customer AS c ON c.customer_id = COALESCE(o.customer_id, oc.customer_id)
 CROSS JOIN (SELECT customer_key FROM dw.dim_customer WHERE customer_id IS NULL) AS unknown
 ORDER BY o.order_ts, o.order_id;
 

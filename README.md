@@ -29,7 +29,7 @@ data/raw/*.csv ──▶ staging ──▶ data-quality report ──▶ star sc
 | 3 | `sql/03_star_schema.sql` | Creates `fact_sales` and the date, customer and product dimensions with keys and `CHECK` constraints |
 | 4 | `sql/04_load_star_schema.sql` | Cleans and loads; one documented rule per defect |
 | 5 | `sql/05_marts.sql` | Reporting views: monthly KPIs, cohort retention, RFM segments, product ranking |
-| 6 | `sql/06_tests.sql` | Eight assertions (row and revenue reconciliation, no gaps, no duplicates); a failure stops the build |
+| 6 | `sql/06_tests.sql` | Ten assertions (row and revenue reconciliation, one row per order, no gaps, no duplicates); a failure stops the build |
 | 7 | `sql/07_performance.sql` | `EXPLAIN ANALYZE` of the same query without and with an index |
 | 8 | `analysis/*.sql` | Seven business questions, each one query |
 
@@ -48,7 +48,7 @@ Defects found in the raw files (`output/data_quality_report.csv`):
 | Table | Check | Rows | Rule applied in the load |
 |---|---|---:|---|
 | order_lines | exact duplicate rows | 374 of 37,797 | removed |
-| order_lines | customer missing | 134 | assigned to an "unknown" customer so the revenue is kept |
+| order_lines | customer missing | 134 | taken from the other lines of the same order (115 lines); the 19 lines whose order has no known customer go to an "unknown" customer so the revenue is kept |
 | order_lines | quantity = 0 | 112 | excluded as cancelled |
 | order_lines | quantity < 0 | 62 | treated as a sign error, absolute value used |
 | customers | country not a clean ISO code | 178 | trimmed and upper-cased |
@@ -56,7 +56,15 @@ Defects found in the raw files (`output/data_quality_report.csv`):
 | customers | birth year 1900 | 42 | placeholder, set to NULL |
 | products | category spelling variants | 16 of 200 | one spelling per category |
 
-After cleaning, 37,313 order lines in 17,016 orders remain, worth EUR 2.40 million net.
+After cleaning, 37,313 order lines in 16,903 orders remain, worth EUR 2.40 million net.
+
+> **Correction (21 November 2026).** Earlier versions reported 17,016 orders.
+> Missing customer IDs were replaced line by line, so 113 orders were split
+> between their real customer and the "unknown" customer and counted twice
+> in `marts.orders`. The load now takes the customer from the other lines of
+> the same order, and test 10 fails the build if any order appears twice.
+> Revenue was never affected; order counts, average order value and revenue
+> per customer moved slightly.
 
 ## Findings
 
@@ -74,9 +82,9 @@ After cleaning, 37,313 order lines in 17,016 orders remain, worth EUR 2.40 milli
 
   ![RFM segments](output/rfm_segments.png)
 
-- **Channels.** Email-acquired customers are worth the most (EUR 542 average
+- **Channels.** Email-acquired customers are worth the most (EUR 544 average
   revenue, 56.5 % repeat rate); the other four channels are close together
-  (EUR 463 to 471).
+  (EUR 465 to 472).
 - **Promotion.** From 20 to 30 November daily revenue is 34 % to 82 % above the
   rest of the year, depending on the year, at a margin 1 to 4 points lower.
 - **Baskets.** The pair analysis recovers the product pairs that were planted in
