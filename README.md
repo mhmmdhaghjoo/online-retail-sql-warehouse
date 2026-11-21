@@ -142,7 +142,6 @@ More projects:
 
 - [Employee Turnover Analytics](https://github.com/mhmmdhaghjoo/employee-turnover-analytics): people analytics on a public practice HR dataset (ten years, likely simulated), with survival analysis, risk models and a fairness audit
 
-- [Delivery Performance Analytics](https://github.com/mhmmdhaghjoo/delivery-performance-analytics): is the delivery promise kept? real marketplace data, tested KPIs and a Power BI dashboard for logistics
 
 More about me: [mhmmdhaghjoo.github.io](https://mhmmdhaghjoo.github.io) and [github.com/mhmmdhaghjoo](https://github.com/mhmmdhaghjoo)
 
